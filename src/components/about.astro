@@ -1,0 +1,167 @@
+---
+import SkillsList from "../React/SkillsList.tsx";
+---
+
+<section class="text-[var(--white)] mt-12 md:mt-0" id="about">
+  <div class="max-w-5xl mx-auto space-y-8 md:py-36 pb-14">
+    <div class="flex flex-col lg:flex-row items-start gap-8">
+      <div class="about-description">
+        <p>
+          I'm a <b>Senior Software Developer</b> based in Port Elizabeth, South Africa, working with a small team at 
+          <a href="https://wirk.co.za" target="_blank" rel="noopener noreferrer"> Wirk Pty Ltd</a> on projects for DSA in Aachen, Germany. 
+          I'm also studying part-time toward a <b>BSc in Applied Artificial Intelligence</b> at the 
+          <a href="https://www.iu.org" target="_blank" rel="noopener noreferrer">International University of Applied Sciences</a>.
+        </p>
+        
+        <p class="mt-4">Here are some technologies I have been working with:</p>
+        
+        <ul class="tech-stack">
+          <div class="fade-in-section" style="transition-delay: 100ms;">
+            <li>Java</li>
+          </div>
+          <div class="fade-in-section" style="transition-delay: 200ms;">
+            <li>Docker</li>
+          </div>
+          <div class="fade-in-section" style="transition-delay: 300ms;">
+            <li>Jenkins</li>
+          </div>
+          <div class="fade-in-section" style="transition-delay: 400ms;">
+            <li>React</li>
+          </div>
+          <div class="fade-in-section" style="transition-delay: 500ms;">
+            <li>TypeScript</li>
+          </div>
+          <div class="fade-in-section" style="transition-delay: 600ms;">
+            <li>Python</li>
+          </div>
+        </ul>
+        
+        <p class="mt-4">
+          Outside of work and study, I'm a mom of two daughters, and I love running, hiking, and reading. 
+          I also have a fascination with neuroscience, especially how the brain learns and optimizes itself.
+        </p>
+      </div>
+      
+      <div class="flex justify-center md:h-[300px] size-[300px] pt-3 md:pt-9 md:ml-16 flex-shrink-0">
+        <img
+          src="/profile_picture.png"
+          alt="Larissa Engelbrecht profile picture"
+          class="w-full h-full object-cover rounded-2xl"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-description {
+    color: var(--white-icon);
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 18px;
+    max-width: 600px;
+    text-align: justify;
+    line-height: 1.6;
+  }
+  
+  .about-description b {
+    color: var(--white);
+    font-weight: 600;
+  }
+  
+  .about-description a {
+    color: var(--sec);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .about-description a:hover {
+    color: #6dc0e4ff;
+    text-decoration: underline;
+  }
+  
+  .tech-stack {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 16px;
+    padding-left: 0;
+    list-style: none;
+  }
+  
+  .tech-stack li {
+    position: relative;
+    padding-left: 20px;
+    color: var(--white-icon);
+    font-size: 16px;
+  }
+  
+  .tech-stack li::before {
+    content: "▹";
+    position: absolute;
+    left: 0;
+    color: var(--sec);
+    font-size: 18px;
+    line-height: 1;
+  }
+  
+  .fade-in-section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  
+  .fade-in-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Trigger fade-in on load */
+  @media (prefers-reduced-motion: no-preference) {
+    .fade-in-section {
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .about-description {
+      font-size: 16px;
+      max-width: 100%;
+    }
+    
+    .tech-stack {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
+
+<script>
+  // Add intersection observer for fade-in effect
+  document.addEventListener('DOMContentLoaded', () => {
+    const fadeElements = document.querySelectorAll('.fade-in-section');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+    
+    fadeElements.forEach(element => {
+      observer.observe(element);
+    });
+  });
+</script>
