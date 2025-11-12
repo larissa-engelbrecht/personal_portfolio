@@ -15,9 +15,11 @@ const technologies = [
   "mysql",
   "bash",
 ];
+
+const { class: className } = Astro.props;
 ---
 
-<div class="relative overflow-x-hidden py-8">
+<div class:list={["relative overflow-x-hidden py-8", className]}>
   <div
     class="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[var(--background)] to-transparent z-20"
   >
