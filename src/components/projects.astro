@@ -10,7 +10,9 @@ interface Project {
   image: ImageMetadata;
   link: string;
   preview: string;
-  status: string;
+  description: string; // ADDED
+  tech: string[]; // ADDED
+  category: "Side Projects" | "University";
 }
 
 const projects: Project[] = [
@@ -19,30 +21,54 @@ const projects: Project[] = [
     image: moviesfordevs as ImageMetadata,
     link: "https://github.com/gothsec/MoviesForDevs",
     preview: "https://movies-for-devs.vercel.app",
-    status: "Deployed",
+    description: "A curated list of inspiring movies for developers, built with Astro and Tailwind CSS.",
+    tech: ["Astro", "TailwindCSS", "TypeScript"],
+    category: "Side Projects",
   },
   {
     title: "StockIn",
     image: stockin as ImageMetadata,
     link: "https://github.com/gothsec/stockin-demo",
     preview: "https://stockin-demo.vercel.app",
-    status: "On Development",
+    description: "A full-stack inventory management system with dashboard analytics and user roles.",
+    tech: ["Next.js", "TypeScript", "Firebase", "TailwindCSS"],
+    category: "Side Projects",
   },
   {
     title: "Svgl.app",
     image: svgl as ImageMetadata,
     link: "https://github.com/pheralb/svgl",
     preview: "https://svgl.app",
-    status: "Contributor",
+    description: "A beautiful open-source library of SVG logos for tech and brands. I'm a contributor.",
+    tech: ["Open Source", "SVG"],
+    category: "Side Projects",
   },
   {
     title: "Rifas Velez Web",
     image: velez as ImageMetadata,
     link: "https://github.com/Buga-Software/rifasvelez-web",
     preview: "https://www.rifasvelez.com",
-    status: "Deployed",
+    description: "A commercial website for a raffle company, built as part of a freelance team.",
+    tech: ["React", "Firebase", "Styled-Components"],
+    category: "Side Projects",
+  },
+  // --- UNIVERSITY PROJECTS ---
+  {
+    title: "AI Research Project",
+    image: stockin as ImageMetadata, // Change to your project image
+    link: "https://github.com/...",
+    preview: "https://...",
+    description: "A research project on neural networks for my BSc in Applied AI. (Placeholder)",
+    tech: ["Python", "TensorFlow", "Jupyter"],
+    category: "University",
   },
 ];
+
+const myProjects = projects.filter((p) => p.category === "Side Projects");
+const uniProjects = projects.filter((p) => p.category === "University");
+
+const hasMyProjects = myProjects.length > 0;
+const hasUniProjects = uniProjects.length > 0;
 ---
 
 <section
@@ -50,45 +76,91 @@ const projects: Project[] = [
   class="py-12 border-t border-[#ffffff10] text-[var(--white)]"
 >
   <div class="max-w-5xl mx-auto">
-    <h2 class="text-lg text-[var(--sec)] mb-2 shiny-sec">My work</h2>
     <h3 class="text-4xl md:text-5xl font-medium mb-8">Projects</h3>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      {
-        projects.map((project) => (
-          <div class="group">
-            <a
-              href={project.preview}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="block"
-            >
-              <div class="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 mb-4">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  class="w-full h-48 md:h-72 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              <div class="flex items-center px-3">
-                <div class="flex-grow">
-                  <h4 class="text-2xl font-semibold">{project.title}</h4>
-                  <span class="py-1 text-sm text-[var(--white-icon)]">
-                    {project.status}
-                  </span>
+    <div class="flex justify-center gap-2 md:gap-4 mb-12">
+      <button
+        class="project-filter-btn active-filter"
+        data-filter="all"
+        aria-pressed="true">All</button
+      >
+      <button
+        class="project-filter-btn"
+        data-filter="side-projects"
+        aria-pressed="false"
+        style={!hasMyProjects ? "display: none;" : ""}>Side Projects</button
+      >
+      <button
+        class="project-filter-btn"
+        data-filter="university"
+        aria-pressed="false"
+        style={!hasUniProjects ? "display: none;" : ""}>University Projects</button
+      >
+    </div>
+
+    <div
+      id="side-projects"
+      class="project-list mb-16"
+      style={!hasMyProjects ? "display: none;" : ""}
+    >
+      <h2 class="text-lg text-[var(--sec)] mb-2 shiny-sec">Side Projects</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12">
+        {
+          myProjects.map((project) => (
+            <div class="group">
+              <a
+                href={project.preview}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="block rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 mb-4"
+              >
+                <div class="relative">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    class="w-full h-40 md:h-56 object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div class="absolute inset-0 bg-black/75 p-4 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
+                    <p class="text-center text-sm text-[var(--white)]">
+                      {project.description}
+                    </p>
+                  </div>
                 </div>
-                <div class="flex gap-2 ml-auto">
+              </a>
+
+              <div class="flex items-start justify-between gap-4 px-1 mt-4">
+                <div class="flex-grow">
+                  <a
+                    href={project.preview}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <h4 class="text-2xl font-semibold hover:text-[var(--sec)] transition-colors">
+                      {project.title}
+                    </h4>
+                  </a>
+
+                  <div class="flex flex-wrap gap-1.5 mt-2">
+                    {project.tech.map((skill) => (
+                      <span class="py-0.5 px-2.5 rounded-full bg-[#1414149c] border border-[var(--white-icon-tr)] text-xs text-[var(--white-icon)]">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div class="flex gap-2 ml-auto flex-shrink-0">
                   <a
                     target="_blank"
                     href={project.link}
                     aria-label="GitHub"
-                    class="size-14 flex justify-center items-center text-[var(--white-icon)] hover:text-white transition duration-300 ease-in-out border border-1 border-[var(--white-icon-tr)] p-3 rounded-xl bg-[#1414149c] hover:bg-[var(--white-icon-tr)]"
+                    class="size-10 flex justify-center items-center text-[var(--white-icon)] hover:text-white transition duration-300 ease-in-out border border-1 border-[var(--white-icon-tr)] p-2 rounded-xl bg-[#1414149c] hover:bg-[var(--white-icon-tr)]"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
                       fill="currentColor"
-                      class="size-7"
+                      class="size-6"
                     >
                       <path d="M24 12L18.3431 17.6569L16.9289 16.2426L21.1716 12L16.9289 7.75736L18.3431 6.34315L24 12ZM2.82843 12L7.07107 16.2426L5.65685 17.6569L0 12L5.65685 6.34315L7.07107 7.75736L2.82843 12ZM9.78845 21H7.66009L14.2116 3H16.3399L9.78845 21Z" />
                     </svg>
@@ -97,23 +169,188 @@ const projects: Project[] = [
                     target="_blank"
                     href={project.preview}
                     aria-label="Preview"
-                    class="size-14 flex justify-center items-center text-[var(--white-icon)] hover:text-white transition duration-300 ease-in-out border border-1 border-[var(--white-icon-tr)] p-3 rounded-xl bg-[#1414149c] hover:bg-[var(--white-icon-tr)]"
+                    class="size-10 flex justify-center items-center text-[var(--white-icon)] hover:text-white transition duration-300 ease-in-out border border-1 border-[var(--white-icon-tr)] p-2 rounded-xl bg-[#1414149c] hover:bg-[var(--white-icon-tr)]"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
                       fill="currentColor"
-                      class="size-7"
+                      class="size-6"
                     >
                       <path d="M16.0037 9.41421L7.39712 18.0208L5.98291 16.6066L14.5895 8H7.00373V6H18.0037V17H16.0037V9.41421Z" />
                     </svg>
                   </a>
                 </div>
               </div>
-            </a>
-          </div>
-        ))
-      }
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div
+      id="uni-projects"
+      class="project-list"
+      style={!hasUniProjects ? "display: none;" : ""}
+    >
+      <h2 class="text-lg text-[var(--sec)] mb-2 shiny-sec">
+        University Projects
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12">
+        {
+          uniProjects.map((project) => (
+            <div class="group">
+              <a
+                href={project.preview}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="block rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 mb-4"
+              >
+                <div class="relative">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    class="w-full h-40 md:h-56 object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div class="absolute inset-0 bg-black/75 p-4 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
+                    <p class="text-center text-sm text-[var(--white)]">
+                      {project.description}
+                    </p>
+                  </div>
+                </div>
+              </a>
+
+              <div class="flex items-start justify-between gap-4 px-1 mt-4">
+                <div class="flex-grow">
+                  <a
+                    href={project.preview}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <h4 class="text-2xl font-semibold hover:text-[var(--sec)] transition-colors">
+                      {project.title}
+                    </h4>
+                  </a>
+
+                  <div class="flex flex-wrap gap-1.5 mt-2">
+                    {project.tech.map((skill) => (
+                      <span class="py-0.5 px-2.5 rounded-full bg-[#1414149c] border border-[var(--white-icon-tr)] text-xs text-[var(--white-icon)]">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div class="flex gap-2 ml-auto flex-shrink-0">
+                  <a
+                    target="_blank"
+                    href={project.link}
+                    aria-label="GitHub"
+                    class="size-10 flex justify-center items-center text-[var(--white-icon)] hover:text-white transition duration-300 ease-in-out border border-1 border-[var(--white-icon-tr)] p-2 rounded-xl bg-[#1414149c] hover:bg-[var(--white-icon-tr)]"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="size-6"
+                    >
+                      <path d="M24 12L18.3431 17.6569L16.9289 16.2426L21.1716 12L16.9289 7.75736L18.3431 6.34315L24 12ZM2.82843 12L7.07107 16.2426L5.65685 17.6569L0 12L5.65685 6.34315L7.07107 7.75736L2.82843 12ZM9.78845 21H7.66009L14.2116 3H16.3399L9.78845 21Z" />
+                    </svg>
+                  </a>
+                  <a
+                    target="_blank"
+                    href={project.preview}
+                    aria-label="Preview"
+                    class="size-10 flex justify-center items-center text-[var(--white-icon)] hover:text-white transition duration-300 ease-in-out border border-1 border-[var(--white-icon-tr)] p-2 rounded-xl bg-[#1414149c] hover:bg-[var(--white-icon-tr)]"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="size-6"
+                    >
+                      <path d="M16.0037 9.41421L7.39712 18.0208L5.98291 16.6066L14.5895 8H7.00373V6H18.0037V17H16.0037V9.41421Z" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
     </div>
   </div>
 </section>
+
+<style>
+  .project-filter-btn {
+    padding: 0.5rem 1.25rem;
+    border-radius: 9999px; /* pill shape */
+    background-color: #1414149c;
+    color: var(--white-icon);
+    border: 1px solid var(--white-icon-tr);
+    transition: all 0.3s ease;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .project-filter-btn:hover {
+    background-color: var(--white-icon-tr);
+    color: var(--white);
+  }
+  .project-filter-btn.active-filter {
+    background-color: var(--sec);
+    color: var(--background);
+    border-color: var(--sec);
+  }
+  .project-list {
+    display: block; /* Default state */
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const filterButtons = document.querySelectorAll(".project-filter-btn");
+    const myProjectsList = document.getElementById(
+      "side-projects"
+    ) as HTMLElement | null;
+    const uniProjectsList = document.getElementById(
+      "uni-projects"
+    ) as HTMLElement | null;
+
+    // Get the state of whether lists have content (from the 'style' tag we added)
+    const hasMyProjects =
+      myProjectsList?.style.display !== "none" || myProjectsList === null;
+    const hasUniProjects =
+      uniProjectsList?.style.display !== "none" || uniProjectsList === null;
+
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const filter = button.getAttribute("data-filter");
+
+        // Update active button state
+        filterButtons.forEach((btn) => {
+          btn.classList.remove("active-filter");
+          btn.setAttribute("aria-pressed", "false");
+        });
+        button.classList.add("active-filter");
+        button.setAttribute("aria-pressed", "true");
+
+        // Show/hide lists based on filter
+        if (filter === "all") {
+          if (myProjectsList && hasMyProjects) myProjectsList.style.display =
+            "block";
+          if (uniProjectsList && hasUniProjects) uniProjectsList.style.display =
+            "block";
+        } else if (filter === "side-projects") {
+          if (myProjectsList && hasMyProjects) myProjectsList.style.display =
+            "block";
+          if (uniProjectsList) uniProjectsList.style.display = "none";
+        } else if (filter === "university") {
+          if (myProjectsList) myProjectsList.style.display = "none";
+          if (uniProjectsList && hasUniProjects) uniProjectsList.style.display =
+            "block";
+        }
+      });
+    });
+  });
+</script>
