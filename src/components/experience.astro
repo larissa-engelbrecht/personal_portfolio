@@ -1,0 +1,188 @@
+---
+// src/components/experience.astro
+
+interface Job {
+  company: string;
+  position: string;
+  duration: string;
+  description: string[];
+}
+
+const jobs: Job[] = [
+  {
+    company: "Wirk Pty Ltd",
+    position: "Senior Software Developer",
+    duration: "2020 - PRESENT",
+    description: [
+      "Working with a small team on projects for DSA in Aachen, Germany, developing enterprise-level Java applications.",
+      "Implementing CI/CD pipelines using Docker and Jenkins for automated testing and deployment.",
+      "Collaborating on full-stack development using React, TypeScript, and modern web technologies.",
+    ],
+  },
+  {
+    company: "Previous Company",
+    position: "Software Developer",
+    duration: "2018 - 2020",
+    description: [
+      "Developed and maintained web applications using React and Node.js.",
+      "Implemented responsive UI components with a focus on user experience.",
+      "Collaborated with cross-functional teams to deliver high-quality software solutions.",
+    ],
+  },
+  // Add more jobs as needed
+];
+---
+
+<section class="text-[var(--white)] border-t border-[#ffffff10] py-12 md:py-32" id="experience">
+  <div class="max-w-5xl mx-auto">
+    <h3 class="text-4xl md:text-5xl font-medium mb-8">Experience</h3>
+    
+    <div class="flex flex-col md:flex-row gap-8">
+      <!-- Company tabs (sidebar) -->
+      <div class="md:min-w-[200px] flex md:flex-col overflow-x-auto md:overflow-visible">
+        <div class="flex md:flex-col gap-2 md:gap-0 relative">
+          {jobs.map((job, index) => (
+            <button
+              class={`experience-tab text-left px-4 py-3 text-[var(--white-icon)] hover:text-[var(--white)] hover:bg-[#1414149c] transition-all rounded-lg md:rounded-none md:rounded-l-lg border-l-2 border-transparent whitespace-nowrap md:whitespace-normal ${index === 0 ? 'active' : ''}`}
+              data-index={index}
+              role="tab"
+              aria-selected={index === 0}
+            >
+              {job.company}
+            </button>
+          ))}
+          <!-- Active indicator line -->
+          <div class="experience-indicator absolute left-0 w-0.5 h-12 bg-[var(--sec)] transition-all duration-300 hidden md:block" style="top: 0;"></div>
+        </div>
+      </div>
+
+      <!-- Job details panel -->
+      <div class="flex-1">
+        {jobs.map((job, index) => (
+          <div
+            class={`experience-panel ${index === 0 ? 'active' : ''}`}
+            data-index={index}
+            role="tabpanel"
+          >
+            <h4 class="text-2xl font-semibold text-[var(--white)] mb-2">
+              <span>{job.position}</span>
+              <span class="text-[var(--sec)]"> @ {job.company}</span>
+            </h4>
+            <p class="text-sm text-[var(--white-icon)] mb-6 tracking-wider">
+              {job.duration}
+            </p>
+            <ul class="space-y-4">
+              {job.description.map((item, itemIndex) => (
+                <li class="flex gap-3 text-[var(--white-icon)] fade-in-section" style={`transition-delay: ${(itemIndex + 1) * 100}ms;`}>
+                  <span class="text-[var(--sec)] mt-1.5 flex-shrink-0">▹</span>
+                  <span class="leading-relaxed">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .experience-tab {
+    position: relative;
+  }
+  
+  .experience-tab.active {
+    color: var(--sec);
+    background-color: #1414149c;
+    border-left-color: var(--sec);
+  }
+
+  .experience-panel {
+    display: none;
+    animation: fadeIn 0.3s ease-in;
+  }
+
+  .experience-panel.active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fade-in-section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .fade-in-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    .experience-tab {
+      border-left: none;
+      border-bottom: 2px solid transparent;
+    }
+    
+    .experience-tab.active {
+      border-bottom-color: var(--sec);
+      border-left-color: transparent;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.experience-tab');
+    const panels = document.querySelectorAll('.experience-panel');
+    const indicator = document.querySelector('.experience-indicator') as HTMLElement;
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const index = tab.getAttribute('data-index');
+        
+        // Update tabs
+        tabs.forEach((t) => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+
+        // Update panels
+        panels.forEach((p) => p.classList.remove('active'));
+        const activePanel = document.querySelector(`.experience-panel[data-index="${index}"]`);
+        activePanel?.classList.add('active');
+
+        // Animate fade-in for list items
+        const fadeElements = activePanel?.querySelectorAll('.fade-in-section');
+        fadeElements?.forEach((el) => {
+          el.classList.remove('is-visible');
+          setTimeout(() => el.classList.add('is-visible'), 50);
+        });
+
+        // Move indicator (desktop only)
+        if (indicator && window.innerWidth >= 768) {
+          const tabElement = tab as HTMLElement;
+          indicator.style.top = `${tabElement.offsetTop}px`;
+        }
+      });
+    });
+
+    // Trigger initial fade-in
+    const initialFadeElements = document.querySelectorAll('.experience-panel.active .fade-in-section');
+    initialFadeElements.forEach((el) => {
+      setTimeout(() => el.classList.add('is-visible'), 100);
+    });
+  });
+</script>
