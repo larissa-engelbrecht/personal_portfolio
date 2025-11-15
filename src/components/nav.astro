@@ -116,23 +116,11 @@ const navItems: NavItem[] = [
   const maxScroll = 1000;
   let rafId: number | null = null;
 
-  function updateNav() {
+ function updateNav() {
     if (window.scrollY > 0) {
       nav?.classList.add("scrolling");
-
-      const scrollProgress = Math.min(window.scrollY / maxScroll, 1);
-      const easeProgress = 1 - Math.pow(1 - scrollProgress, 4);
-
-      const minWidth = 528;
-      const maxWidth = window.innerWidth * 0.8;
-      const currentWidth = maxWidth - (maxWidth - minWidth) * easeProgress;
-
-      if (window.innerWidth >= 768) {
-        nav?.style.setProperty("width", `${currentWidth}px`);
-      }
     } else {
       nav?.classList.remove("scrolling");
-      nav?.style.setProperty("width", "80%");
     }
     rafId = null;
   }

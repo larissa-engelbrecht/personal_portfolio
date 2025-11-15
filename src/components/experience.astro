@@ -10,7 +10,7 @@ interface Job {
 
 const jobs: Job[] = [
   {
-    company: "Wirk Pty Ltd",
+    company: "Wirk Pty Ltd (for DSA)",
     position: "Senior Software Developer",
     duration: "2020 - PRESENT",
     description: [
@@ -20,20 +20,54 @@ const jobs: Job[] = [
     ],
   },
   {
-    company: "Previous Company",
-    position: "Software Developer",
-    duration: "2018 - 2020",
+   company: "Canpango",
+    position: "Salesforce Developer",
+    duration: "Jul 2019 - Nov 2019",
     description: [
-      "Developed and maintained web applications using React and Node.js.",
-      "Implemented responsive UI components with a focus on user experience.",
-      "Collaborated with cross-functional teams to deliver high-quality software solutions.",
+      "Developed new features and maintained client applications within the Salesforce ecosystem.",
+      "Worked with Salesforce Sales Cloud and Apex development.",
     ],
   },
-  // Add more jobs as needed
+  {
+    company: "Tigers Limited",
+    position: "Software Developer",
+    duration: "Oct 2018 - Jun 2019",
+    description: [
+      "Developed and maintained web applications using C#, .NET, JavaScript, AngularJS, and WCF Services.",
+      "Managed SQL Server databases, including writing queries and stored procedures.",
+    ],
+  },
+  {
+    company: "S4 Integration",
+    position: "Software Developer",
+    duration: "Jun 2018 - Sep 2018",
+    description: [
+      "Maintained existing web applications and provided internal support."
+    ],
+  },
+  {
+    company: "Providence Health",
+    position: "Application Developer",
+    duration: "Jul 2013 - May 2017  &  Oct 2017 - Jun 2018",
+    description: [
+      "Maintained and developed new features for web applications managing medical aids.",
+      "Managed and modified SQL databases, creating stored procedures to enhance queries.",
+      "Provided internal support and maintained multiple medical aid websites.",
+    ],
+  },
+  {
+    company: "Hybrid Development",
+    position: "Support Developer",
+    duration: "May 2017 - Sep 2017",
+    description: [
+      "Maintained websites and managed SQL databases for clients in the optometry industry.",
+      "Used Google Analytics, Shortstack, and MailChimp to track marketing data.",
+    ],
+  },
 ];
 ---
 
-<section class="text-[var(--white)] border-t border-[#ffffff10] py-12 md:py-32" id="experience">
+<section class="py-12 border-t border-[#ffffff10] text-[var(--white)]" id="experience">
   <div class="max-w-5xl mx-auto">
     <h3 class="text-4xl md:text-5xl font-medium mb-8">Experience</h3>
     
@@ -93,8 +127,6 @@ const jobs: Job[] = [
   
   .experience-tab.active {
     color: var(--sec);
-    background-color: #1414149c;
-    border-left-color: var(--sec);
   }
 
   .experience-panel {
