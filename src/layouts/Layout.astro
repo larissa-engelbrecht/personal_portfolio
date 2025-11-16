@@ -1,23 +1,28 @@
 ---
 interface Props {
   title: string;
+  description?: string;
 }
 
-const { title } = Astro.props;
+const { title, description = "Software Developer" } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
+   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Software Developer" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
+    
+    <meta name="description" content={description} /> <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta property="og:title" content="Larissa Engelbrecht" />
-    <meta property="og:description" content="Software Developer" />
-    <meta property="og:url" content="https://larissaengelbrecht.com" />
+    
+    <meta property="og:description" content={description} /> <meta property="og:url" content="https://larissaengelbrecht.com" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Larissa Engelbrecht Portfolio" />
+
+    <title>{title}</title>
+  </head>
 
     <title>{title}</title>
   </head>

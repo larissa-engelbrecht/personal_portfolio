@@ -1,19 +1,9 @@
 ---
 import Layout from "./Layout.astro";
 import { Image } from "astro:assets";
-// Removed Nav import
 import Footer from "@/components/footer.astro";
 
-interface Props {
-  title: string;
-  description: string;
-  publishDate: Date;
-  updatedDate?: Date;
-  image: any;
-  tags?: string[];
-}
-
-const { title, description, publishDate, updatedDate, image, tags } =
+const { title, description, publishDate, updatedDate, image } =
   Astro.props;
 
 function formatDate(date: Date) {
