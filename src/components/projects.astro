@@ -4,6 +4,7 @@ import svgl from "../../public/svgl.png";
 import stockin from "../../public/stockin.png";
 import moviesfordevs from "../../public/moviesfordevs.png";
 import velez from "../../public/velez.png";
+import feedbackAPI from "../../public/feedbackloop.png";
 
 interface Project {
   title: string;
@@ -17,51 +18,25 @@ interface Project {
 
 const projects: Project[] = [
   {
-    title: "MoviesForDevs",
-    image: moviesfordevs as ImageMetadata,
-    link: "https://github.com/gothsec/MoviesForDevs",
-    preview: "https://movies-for-devs.vercel.app",
-    description: "A curated list of inspiring movies for developers, built with Astro and Tailwind CSS.",
-    tech: ["Astro", "TailwindCSS", "TypeScript"],
+    title: "FeedBackLoop Analytics API",
+    image: feedbackAPI as ImageMetadata,
+    link: "https://github.com/larissa-engelbrecht/feedback-analytics-api",
+    preview: "https://feedbackloop-api.streamlit.app/",
+    description: "A full-stack web app that ingests user feedback, uses a custom-trained ML model to predict sentiment, and allows for real-time model re-training and validation via a Streamlit dashboard.",
+    tech: ["Python", "FastAPI", "Streamlit", "PostgreSQL", "scikit-learn"],
     category: "Side Projects",
   },
-  {
-    title: "StockIn",
-    image: stockin as ImageMetadata,
-    link: "https://github.com/gothsec/stockin-demo",
-    preview: "https://stockin-demo.vercel.app",
-    description: "A full-stack inventory management system with dashboard analytics and user roles.",
-    tech: ["Next.js", "TypeScript", "Firebase", "TailwindCSS"],
-    category: "Side Projects",
-  },
-  {
-    title: "Svgl.app",
-    image: svgl as ImageMetadata,
-    link: "https://github.com/pheralb/svgl",
-    preview: "https://svgl.app",
-    description: "A beautiful open-source library of SVG logos for tech and brands. I'm a contributor.",
-    tech: ["Open Source", "SVG"],
-    category: "Side Projects",
-  },
-  {
-    title: "Rifas Velez Web",
-    image: velez as ImageMetadata,
-    link: "https://github.com/Buga-Software/rifasvelez-web",
-    preview: "https://www.rifasvelez.com",
-    description: "A commercial website for a raffle company, built as part of a freelance team.",
-    tech: ["React", "Firebase", "Styled-Components"],
-    category: "Side Projects",
-  },
+  
   // --- UNIVERSITY PROJECTS ---
-  {
-    title: "AI Research Project",
-    image: stockin as ImageMetadata, // Change to your project image
-    link: "https://github.com/...",
-    preview: "https://...",
-    description: "A research project on neural networks for my BSc in Applied AI. (Placeholder)",
-    tech: ["Python", "TensorFlow", "Jupyter"],
-    category: "University",
-  },
+  //{
+   // title: "AI Research Project",
+    //image: stockin as ImageMetadata, // Change to your project image
+   // link: "https://github.com/...",
+  //  preview: "https://...",
+   // description: "A research project on neural networks for my BSc in Applied AI. (Placeholder)",
+  //  tech: ["Python", "FastAPI", "Streamlit", ],
+  //  category: "University",
+ // },
 ];
 
 const myProjects = projects.filter((p) => p.category === "Side Projects");
