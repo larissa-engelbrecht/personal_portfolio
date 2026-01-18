@@ -1,14 +1,16 @@
 ---
 import { Image } from "astro:assets";
 import feedbackAPI from "../../public/feedbackloop.png";
+import habitTracker from "../../public/habit_tracker_app.png";
+import complianceAssistant from "../../public/complianceAssistant.png"
 
 interface Project {
   title: string;
   image: ImageMetadata;
   link: string;
   preview: string;
-  description: string; // ADDED
-  tech: string[]; // ADDED
+  description: string;
+  tech: string[]; 
   category: "Side Projects" | "University";
 }
 
@@ -22,17 +24,26 @@ const projects: Project[] = [
     tech: ["Python", "FastAPI", "Streamlit", "PostgreSQL", "scikit-learn"],
     category: "Side Projects",
   },
+  {
+    title: "Compliance Assistant",
+    image: complianceAssistant as ImageMetadata,
+    link: "https://github.com/larissa-engelbrecht/compliance-assistant",
+    //preview: "",
+    description: "An AI compliance assistant using RAG to provide accurate, source-cited answers from the EU AI Act. Features modular architecture for multi-regulation support and local vector search for data privacy.",
+    tech: ["Python", "LlamaIndex", "FastAPI", "Docker", "PostgreSQL (pgvector)", "Streamlit"],
+    category: "Side Projects",
+  },
   
   // --- UNIVERSITY PROJECTS ---
-  //{
-   // title: "AI Research Project",
-    //image: stockin as ImageMetadata, // Change to your project image
-   // link: "https://github.com/...",
-  //  preview: "https://...",
-   // description: "A research project on neural networks for my BSc in Applied AI. (Placeholder)",
-  //  tech: ["Python", "FastAPI", "Streamlit", ],
-  //  category: "University",
- // },
+  {
+   title: "Habit Tracker",
+   image: habitTracker as ImageMetadata,
+   link: "https://github.com/larissa-engelbrecht/habit-tracker",
+   //preview: "https://...",
+   description: "A full-stack habit tracking dashboard with analytics. Note: This is a mobile-first web application designed to mimic native mobile UX patterns, running entirely in the browser.",
+   tech: ["Python", "Django", "SQLite3", "React", "TypeScript"],
+   category: "University",
+  },
 ];
 
 const myProjects = projects.filter((p) => p.category === "Side Projects");
@@ -44,7 +55,7 @@ const hasUniProjects = uniProjects.length > 0;
 
 <section
   id="projects"
-  class="py-12 border-t border-[#ffffff10] text-[var(--white)]"
+  class="py-12 border-t border-[#ffffff10] text-[var(--white)] scroll-mt-32"
 >
   <div class="max-w-5xl mx-auto">
     <h3 class="text-4xl md:text-5xl font-medium mb-8">Projects</h3>
